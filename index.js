@@ -13,7 +13,7 @@ const app = express();
 
 const Joi = require("joi");
 
-const expireTime = 24 * 60 * 60 * 1000; //expires after 1 day  (hours * minutes * seconds * millis)
+const expireTime = 60 * 60 * 1000; //expires after 1 day  (hours * minutes * seconds * millis)
 
 /* secret information section */
 const mongodb_host = process.env.MONGODB_HOST;
@@ -175,6 +175,8 @@ app.post("/submitUser", async (req, res) => {
     username: username,
     password: hashedPassword,
   });
+  req.session.email = email;
+  req.session.authenticated = true;
   console.log("Inserted user");
 
   var html =
@@ -211,7 +213,6 @@ app.post("/loggingin", async (req, res) => {
     req.session.authenticated = true;
     req.session.email = email;
     req.session.cookie.maxAge = expireTime;
-    req.session.authenticated = true;
 
     res.redirect("/loggedIn");
     return;
