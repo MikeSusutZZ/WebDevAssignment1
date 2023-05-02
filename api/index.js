@@ -1,4 +1,4 @@
-require("./utils.js");
+require("../utils.js");
 
 require("dotenv").config();
 const express = require("express");
@@ -301,6 +301,8 @@ app.get("*", (req, res) => {
 });
 
 
-app.listen(3000, () => {
-  console.log("Node application listening on port " + port);
-}); 
+// app.listen(3000, () => {
+//   console.log("Node application listening on port " + port);
+// }); 
+
+module.exports = app;
