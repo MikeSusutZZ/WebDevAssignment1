@@ -1,1 +1,1 @@
-web: command to launch
+web: node index.js
