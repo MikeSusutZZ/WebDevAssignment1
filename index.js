@@ -185,6 +185,7 @@ app.post("/submitUser", async (req, res) => {
 app.post("/loggingin", async (req, res) => {
   var email = req.body.email;
   var password = req.body.password;
+  console.log(req.session);
 
   const schema = Joi.string().max(20).required();
   const validationResult = schema.validate(email);
@@ -210,6 +211,7 @@ app.post("/loggingin", async (req, res) => {
     req.session.authenticated = true;
     req.session.email = email;
     req.session.cookie.maxAge = expireTime;
+    req.session.authenticated = true;
 
     res.redirect("/loggedIn");
     return;
@@ -260,8 +262,9 @@ app.get("/logout", async (req, res) => {
   res.send(html);
 });
 
+//fix this
 app.get("/in", async (req, res) => {
-  if (req.session.email == null) {
+  if (!req.session.authenticated) {
 	console.log("You're not supposed to be here yet")
     res.redirect("/");
   } else {
